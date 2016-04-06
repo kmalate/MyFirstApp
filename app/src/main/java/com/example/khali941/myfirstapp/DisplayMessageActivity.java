@@ -40,6 +40,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
             return true;
         }
 
+        //test comment
         return super.onOptionsItemSelected(item);
     }
 }
