@@ -1,6 +1,8 @@
 package com.example.khali941.myfirstapp;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,25 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        // Get the intent that started this activity
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        String intentType = intent.getType();
+
+        if (intentType == null) {
+            return;
+        }
+
+        // Figure out what to do based on the intent type
+        if (intent.getType().indexOf("image/") != -1) {
+            // Handle intents with image data ...
+        } else if (intent.getType().equals("text/plain")) {
+            Intent displayIntent = new Intent(this, DisplayMessageActivity.class);
+            String message = intent.getStringExtra(Intent.EXTRA_TEXT);
+            displayIntent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(displayIntent);
+        }
     }
 
     @Override
@@ -45,5 +66,12 @@ public class MyActivity extends AppCompatActivity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    public void setResult(View view) {
+        // Create intent to deliver some kind of result data
+        Intent result = new Intent("com.example.RESULT_ACTION", Uri.parse("content://result_uri"));
+        setResult(Activity.RESULT_OK, result);
+        finish();
     }
 }
