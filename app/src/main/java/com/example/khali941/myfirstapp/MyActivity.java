@@ -31,10 +31,9 @@ public class MyActivity extends AppCompatActivity {
         if (intent.getType().indexOf("image/") != -1) {
             // Handle intents with image data ...
         } else if (intent.getType().equals("text/plain")) {
-            Intent displayIntent = new Intent(this, DisplayMessageActivity.class);
             String message = intent.getStringExtra(Intent.EXTRA_TEXT);
-            displayIntent.putExtra(EXTRA_MESSAGE, message);
-            startActivity(displayIntent);
+            EditText editText = (EditText)findViewById(R.id.edit_message);
+            editText.setText(message);
         }
     }
 
